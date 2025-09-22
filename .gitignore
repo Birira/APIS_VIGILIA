@@ -1,9 +1,10 @@
 .env
 venv
 __pycache__
-
-#fortend
-
+Frontend
+datos_colmena.csv
+prop_datos
+upload_csv.py
 # Logs
 logs
 *.log
