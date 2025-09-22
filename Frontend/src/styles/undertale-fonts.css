@@ -1,0 +1,68 @@
+/* Global Undertale Font Styles */
+
+/* Main monospace font for data display */
+.undertale-mono {
+  font-family: 'determination-mono', 'Courier New', monospace;
+}
+
+/* Sans font for headers and labels */
+.undertale-sans {
+  font-family: 'determination-sans', 'Arial', sans-serif;
+}
+
+/* Papyrus font for special elements */
+.undertale-papyrus {
+  font-family: 'papyrus', 'Fantasy', cursive;
+}
+
+/* Comic Sans font for casual elements */
+.undertale-comic {
+  font-family: 'comic-sans', 'Comic Sans MS', cursive;
+}
+
+/* Utility classes for common styling */
+.pixel-text {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+}
+
+.retro-shadow {
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.pixel-border {
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #000, #333, #000) 1;
+}
+
+/* Animated text effects */
+@keyframes pixelGlow {
+  0%, 100% { text-shadow: 0 0 5px currentColor; }
+  50% { text-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+}
+
+.pixel-glow {
+  animation: pixelGlow 2s ease-in-out infinite;
+}
+
+/* Undertale-style colors */
+.determination-red { color: #ff0000; }
+.soul-blue { color: #00ffff; }
+.bravery-orange { color: #ff8000; }
+.justice-yellow { color: #ffff00; }
+.kindness-green { color: #00ff00; }
+.patience-cyan { color: #00ffff; }
+.perseverance-purple { color: #8000ff; }
+.integrity-blue { color: #0080ff; }
+
+/* Background themes */
+.dark-world {
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  color: #eee;
+}
+
+.underground {
+  background: linear-gradient(135deg, #2d2d2d, #1a1a1a, #000);
+  color: #fff;
+}

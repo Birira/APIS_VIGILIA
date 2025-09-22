@@ -1,0 +1,72 @@
+-- Habilitar FK en cada conexión
+PRAGMA foreign_keys = ON; -- obligatorio en SQLite para que se apliquen las FK [1]
+
+-- Tabla base de mediciones
+CREATE TABLE IF NOT EXISTS datos (
+  id              INTEGER PRIMARY KEY,                    -- rowid alias [1]
+  temperatura     REAL NOT NULL,                          -- °C [1]
+  sonido          REAL NOT NULL,                          -- Hz/dB según diseño [1]
+  peso            REAL NOT NULL,                          -- kg [1]
+  fecha_registro  TEXT NOT NULL                           -- ISO8601 UTC (TIMESTAMP) [1]
+);
+
+-- Catálogo de reglas/modelos de detección
+CREATE TABLE IF NOT EXISTS regla_detec (
+  id          INTEGER PRIMARY KEY,
+  nombre      TEXT NOT NULL,
+  variable    TEXT NOT NULL CHECK (variable IN ('temperatura','sonido','peso')),
+  metodo      TEXT NOT NULL,               -- 'umbral','zscore','iqr','ml', etc. [22]
+  parametros  TEXT,                         -- JSON (usar JSON1) [23]
+  descripcion TEXT,
+  creado_en   TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- Catálogo de severidad
+CREATE TABLE IF NOT EXISTS severidad (
+  id        INTEGER PRIMARY KEY,
+  codigo    TEXT NOT NULL UNIQUE,           -- 'baja','media','alta','critica' [1]
+  prioridad INTEGER NOT NULL                -- menor = más urgente [1]
+);
+
+-- Tabla de eventos de anomalía (con columnas generadas)
+CREATE TABLE IF NOT EXISTS anomalias (
+  id             INTEGER PRIMARY KEY,
+  dato_id        INTEGER NOT NULL REFERENCES datos(id) ON DELETE CASCADE,
+  variable       TEXT NOT NULL CHECK (variable IN ('temperatura','sonido','peso')),
+  observado      REAL NOT NULL,
+  esperado       REAL,
+  -- columnas generadas STORED (SQLite 3.31+)
+  desviacion     REAL GENERATED ALWAYS AS (observado - esperado) STORED,
+  desviacion_pct REAL GENERATED ALWAYS AS (
+                    CASE WHEN esperado IS NULL OR esperado = 0
+                         THEN NULL
+                         ELSE (observado - esperado) * 100.0 / esperado
+                    END) STORED,
+  regla_id       INTEGER REFERENCES regla_detec(id),
+  severidad_id   INTEGER REFERENCES severidad(id),
+  confianza      REAL,                                  -- prob o score [22]
+  alcance        TEXT NOT NULL DEFAULT 'punto' CHECK (alcance IN ('punto','ventana')),
+  ventana_ini    TEXT,                                   -- si aplica ventana [22]
+  ventana_fin    TEXT,                                   -- si aplica ventana [22]
+  estado         TEXT NOT NULL DEFAULT 'nueva' CHECK (estado IN ('nueva','revisada','resuelta','descartada')),
+  detectada_en   TEXT NOT NULL DEFAULT (datetime('now')),
+  metadata       TEXT,                                   -- JSON (JSON1) [23]
+  CHECK (metadata IS NULL OR json_valid(metadata))       -- requiere JSON1 [23]
+);
+
+-- Índice temporal para consultas por rango
+CREATE INDEX IF NOT EXISTS ix_anomalias_tiempo ON anomalias(detectada_en); -- mejora filtros por fecha [24]
+
+-- Índices operativos
+CREATE INDEX IF NOT EXISTS ix_anom_alias_estado    ON anomalias(estado);   -- panel operativo [24]
+CREATE INDEX IF NOT EXISTS ix_anom_variable        ON anomalias(variable); -- filtros por variable [24]
+CREATE INDEX IF NOT EXISTS ix_anom_severidad       ON anomalias(severidad_id); -- SLA [24]
+
+-- Evitar duplicado por misma regla/variable sobre la misma medición
+CREATE UNIQUE INDEX IF NOT EXISTS ux_anomalia_unica
+  ON anomalias(dato_id, variable, regla_id); -- unicidad lógica del evento [24]
+
+-- (Opcional) Índice parcial solo para pendientes (SQLite soporta WHERE)
+CREATE INDEX IF NOT EXISTS ix_anom_pendientes
+  ON anomalias(detectada_en)
+  WHERE estado IN ('nueva','revisada'); -- reduce tamaño/IO [25]

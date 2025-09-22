@@ -1,59 +1,46 @@
-import { useState, useEffect } from 'react'
-import { getCsv } from "./Hooks/getCsv"
+import React from 'react';
+import { useColmenaData } from "./Hooks/useColmenaData";
+import { Grafico } from "./Components/Grafico";
+import { StatusPanel } from "./Components/StatusPanel";
+import { TemperatureStats } from "./Components/TemperatureStats";
 
 function App() {
-  const [call, setCall] = useState([]);
-  const [last, setLast] = useState([]);
-
-  useEffect(() => {
-    const fetchCall = async () => {
-      const col = await getCsv();
-
-      setCall(col);
-      setLast(col[col.length - 1]);
-
-    };
-    fetchCall();
-  }, []);
-
-  const diffHoras = (fechaStr) => {
-    const fecha = new Date(fechaStr.replace(" ", "T"));
-    return ((Date.now() - fecha.getTime()) / 3600000).toFixed(1) + " h";
-  };
+  const {
+    data,
+    latestData,
+    connectionStatus,
+    loading,
+    error,
+    temperatureStats,
+  } = useColmenaData();
 
   return (
-    <>
-      <div className="container pt-2">
-        <div className="row">
-          <h1>Registro de ultima actividad</h1>
-          {call.map((col, index) => (
-            <div className="col" key={index}>
-              <div className="card bg-warning">
-                <div className="card-body">
-                  <p className="card-text">Peso: {col.peso}kg</p>
-                  <p className="card-text">decibelios: {col.decibelios}db</p>
-                  <p className="card-text">temperatura: {col.temperatura}°C</p>
-                  <p className="card-text">Obtención: Hace {diffHoras(col.fecha)}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <h1 className='text-center'>Ultima actividad</h1>
-        <div className="container d-flex justify-content-center row p-2">
-          <div className="card bg-success w-25">
-            <div className="card-body ">
-              <p className="card-text">Peso: {last.peso}kg</p>
-              <p className="card-text">decibelios: {last.decibelios}db</p>
-              <p className="card-text">temperatura: {last.temperatura}°C</p>
-              <p className="card-text">Obtención: Hace {last.fecha}</p>
-            </div>
-          </div>
-        </div>
-      </div >
-    </>
+    <div className="container" style={{ 
+      maxWidth: '1200px',
+      margin: '0 auto',
+      padding: '20px'
+    }}>
+      <h1 style={{ 
+        textAlign: 'center', 
+        color: '#ffffffff',
+        borderBottom: '2px solid #C2AF67',
+        paddingBottom: '10px',
+        textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+      }}>
+        MONITOREO DE COLMENA
+      </h1>
+      
+      <StatusPanel 
+        connectionStatus={connectionStatus}
+        loading={loading}
+        error={error}
+      />
+      
+      <TemperatureStats temperatureStats={temperatureStats} />
+      
+      <Grafico data={data} />
+    </div>
   );
-};
+}
 
 export default App;
