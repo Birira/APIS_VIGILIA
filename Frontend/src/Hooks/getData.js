@@ -1,7 +1,7 @@
 /**
  * Base URL for the FastAPI backend
  */
-const API_BASE_URL = 'http://192.168.100.19:5000';
+const API_BASE_URL = 'http://192.168.100.19:8000';
 
 /**
  * Function to fetch data from the FastAPI backend

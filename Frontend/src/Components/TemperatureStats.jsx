@@ -7,7 +7,7 @@ export const TemperatureStats = ({ temperatureStats }) => {
     <div 
       className="temperature-stats" 
       style={{
-        background: '#f0f8ff',
+        background: '#FFEE8C',
         padding: '20px',
         borderRadius: '5px',
         marginBottom: '30px',
@@ -103,9 +103,9 @@ const StatDescription = () => (
   <div style={{
     marginTop: '15px',
     padding: '10px',
-    background: '#e6f3ff',
+    background: '#DBCC79',
     borderRadius: '5px',
-    color: '#2c5282',
+    color: '#000000ff',
     lineHeight: '1.4'
   }}>
     <strong style={{ 

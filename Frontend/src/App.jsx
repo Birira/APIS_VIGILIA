@@ -3,6 +3,7 @@ import { useColmenaData } from "./Hooks/useColmenaData";
 import { Grafico } from "./Components/Grafico";
 import { StatusPanel } from "./Components/StatusPanel";
 import { TemperatureStats } from "./Components/TemperatureStats";
+import "./Style/index.css";
 
 function App() {
   const {
@@ -22,7 +23,6 @@ function App() {
     }}>
       <h1 style={{ 
         textAlign: 'center', 
-        color: '#ffffffff',
         borderBottom: '2px solid #C2AF67',
         paddingBottom: '10px',
         textShadow: '2px 2px 4px rgba(0,0,0,0.5)'

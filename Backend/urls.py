@@ -83,4 +83,4 @@ async def recibir_datos(
 
 if __name__ == "__main__":
     init_db()
-    uvicorn.run("urls:app", host="192.168.100.19", port=5000)
+    uvicorn.run("urls:app", host="192.168.100.19", port=8000)
