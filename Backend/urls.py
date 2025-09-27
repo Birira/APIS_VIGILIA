@@ -1,4 +1,6 @@
 #uvicorn main:app --reload
+#docker build -t simpl .
+#docker run -it -p 8000:8000 proyecto
 
 from fastapi import FastAPI, Form, HTTPException
 from fastapi.responses import JSONResponse
@@ -34,7 +36,9 @@ def init_db():
         CREATE TABLE IF NOT EXISTS datos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             temperatura REAL,
-            fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            sonido REAL,
+            peso REAL,
+            fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
     conn.commit()
@@ -45,7 +49,7 @@ def read_root():
     try:
         conn = sqlite3.connect("sensores.db")
         c = conn.cursor()
-        c.execute("SELECT id, temperatura, sonido, peso, fecha_registro FROM 'Modelo de datos'")
+        c.execute("SELECT id, temperatura, sonido, peso, fecha_registro FROM datos")
         results = c.fetchall()
         conn.close()
         
@@ -66,14 +70,16 @@ def ping():
 
 @app.post("/datos")
 async def recibir_datos(
-    temperatura: float = Form(...)
+    temperatura: float = Form(...),
+    sonido: float = Form(None),
+    peso: float = Form(None)
 ):
     try:
         conn = sqlite3.connect("sensores.db")
         c = conn.cursor()
         c.execute(
-            "INSERT INTO datos (temperatura) VALUES (?)",
-            (temperatura,)
+            "INSERT INTO datos (temperatura, sonido, peso) VALUES (?, ?, ?)",
+            (temperatura, sonido, peso)
         )
         conn.commit()
         conn.close()
@@ -81,6 +87,7 @@ async def recibir_datos(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-if __name__ == "__main__":
-    init_db()
-    uvicorn.run("urls:app", host="192.168.100.19", port=5000)
+# Initialize database on startup
+
+init_db()
+
