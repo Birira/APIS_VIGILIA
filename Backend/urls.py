@@ -2,6 +2,7 @@
 #docker build -t simpl .
 #docker run -it -p 8000:8000 proyecto
 
+from datetime import datetime, timedelta, timezone
 from fastapi import FastAPI, Form, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,9 +10,13 @@ import json
 import uvicorn
 import sqlite3
 
-from read_colmena import read_colmena
-
 app = FastAPI()
+
+#fecha y hora actual en GMT-3
+gmt_minus_3 = timezone(timedelta(hours=-3))
+
+# Obtener la fecha y hora actual en GMT-3
+dt = datetime.now(gmt_minus_3)
 
 # Add CORS middleware
 origins = [
@@ -78,8 +83,8 @@ async def recibir_datos(
         conn = sqlite3.connect("sensores.db")
         c = conn.cursor()
         c.execute(
-            "INSERT INTO datos (temperatura, sonido, peso) VALUES (?, ?, ?)",
-            (temperatura, sonido, peso)
+            "INSERT INTO datos (temperatura, sonido, peso, fecha_registro) VALUES (?, ?, ?, ?)",
+            (temperatura, sonido, peso, dt.strftime("%Y-%m-%d %H:%M:%S"))
         )
         conn.commit()
         conn.close()
