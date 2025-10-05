@@ -1,8 +1,9 @@
 .venv
 venv
 __pycache__
+importcsv.py
 
-
+datos_colmena.csv
 # Logs
 logs
 *.log

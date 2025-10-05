@@ -26,9 +26,6 @@ app = FastAPI(
 
 # CORS configuration
 origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://192.168.100.19:5173",
     "*"
 ]
 
@@ -66,3 +63,9 @@ def read_root():
     except Exception as e:
         print(f"Error in read_root: {str(e)}")
         return {"data": [], "error": str(e)}
+
+
+@app.get("/ping", tags=["health"])
+def ping():
+    """Verifica el estado de la API"""
+    return {"status": "ok", "message": "API is running"}

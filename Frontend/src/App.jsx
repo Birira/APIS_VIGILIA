@@ -30,15 +30,15 @@ function App() {
         MONITOREO DE COLMENA
       </h1>
       
+      <TemperatureStats temperatureStats={temperatureStats} />
+      
+      <Grafico data={data} />
+      
       <StatusPanel 
         connectionStatus={connectionStatus}
         loading={loading}
         error={error}
       />
-      
-      <TemperatureStats temperatureStats={temperatureStats} />
-      
-      <Grafico data={data} />
     </div>
   );
 }

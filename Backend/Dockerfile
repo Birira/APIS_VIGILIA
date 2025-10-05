@@ -6,4 +6,4 @@ COPY . /app
 
 WORKDIR /app
 RUN pip install -r requirements.txt
-ENTRYPOINT ["uvicorn", "--host", "127.0.0.1", "urls:app", "--port", "8000", "--reload"]
+ENTRYPOINT ["uvicorn", "--host", "127.0.0.1", "main:app", "--port", "8000", "--reload"]

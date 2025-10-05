@@ -8,7 +8,7 @@ export const StatusPanel = ({ connectionStatus, loading, error }) => {
       className="status-panel" 
       style={{
         color: '#000',
-        background: isConnected ? '#2196f3' : '#ff9494ff',
+        background: isConnected ? '#298329ff' : '#ff9494ff',
         padding: '10px',
         borderRadius: '5px',
         marginBottom: '20px',
@@ -20,7 +20,7 @@ export const StatusPanel = ({ connectionStatus, loading, error }) => {
       }}>
         ESTADO DE CONEXIÓN: {' '}
         <span style={{ 
-          color: '#000',
+          color: isConnected ? 'green' : 'red',
           textShadow: '1px 1px 2px rgba(10, 7, 7, 0.7)'
         }}>
           {connectionStatus.toUpperCase()}
