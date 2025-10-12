@@ -1,1 +1,65 @@
+# Python
 __pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+.venv
+venv
+env
+ENV
+
+# Node (si usas Node para algún proceso)
+node_modules
+package-lock.json
+npm-debug.log
+yarn-error.log
+
+# IDEs y editores
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+.docker
+
+# Testing
+.pytest_cache
+.coverage
+htmlcov
+.tox
+*.cover
+
+# Bases de datos locales (solo para desarrollo)
+
+
+# Documentación y archivos de desarrollo
+README.md
+docs/
+*.md
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+.cache

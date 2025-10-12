@@ -16,7 +16,7 @@ export const Grafico = ({ data }) => {
   return (
     <div className="graficos-container">
       {/* Gráfico de Temperatura */}
-      <div style={{ width: '100%', height: 400, marginTop: 20 }}>
+      <div style={{ width: '100%', height: 400, marginTop: 20, marginBottom: 60 }}>
         <h2>Gráfico de Temperatura</h2>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
@@ -25,8 +25,7 @@ export const Grafico = ({ data }) => {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis 
-              dataKey="formattedDate" 
-              label={{ value: 'Fecha', position: 'insideBottomRight', offset: 0 }} 
+              dataKey="formattedDate"
             />
             <YAxis 
               label={{ value: 'Temperatura (°C)', angle: -90, position: 'insideLeft' }} 
