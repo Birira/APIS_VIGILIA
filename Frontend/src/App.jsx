@@ -57,29 +57,46 @@ function App() {
 
   return (
     <div className="container" style={{ 
-      maxWidth: '1200px',
+      maxWidth: '1400px',
       margin: '0 auto',
-      padding: '20px'
+      padding: '20px',
+      background: '#F4F7F0'
     }}>
       <h1 style={{ 
         textAlign: 'center', 
         borderBottom: '2px solid #C2AF67',
         paddingBottom: '10px',
+        marginBottom: '20px',
         textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
       }}>
         MONITOREO DE COLMENA
       </h1>
       
-      <TemperatureStats temperatureStats={temperatureStats} />
-      
-      {/* Filtro de fechas */}
+      {/* Layout de dos columnas */}
       <div style={{
-        background: '#93b455ff',
-        padding: '20px',
-        borderRadius: '8px',
-        marginBottom: '20px',
-        border: '1px solid #ddd'
+        display: 'flex',
+        gap: '20px',
+        alignItems: 'flex-start'
       }}>
+        {/* Columna izquierda - Estadísticas */}
+        <div style={{ 
+          flex: '0 0 350px',
+          position: 'sticky',
+          top: '20px'
+        }}>
+          <TemperatureStats temperatureStats={temperatureStats} />
+        </div>
+        
+        {/* Columna derecha - Filtros y Gráfico */}
+        <div style={{ flex: '1' }}>
+          {/* Filtro de fechas */}
+          <div style={{
+            background: '#C2AF67',
+            padding: '20px',
+            borderRadius: '8px',
+            marginBottom: '20px',
+            border: '1px solid #ddd'
+          }}>
         <h3 style={{ marginTop: 0, marginBottom: '15px' }}>Filtrar por Rango de Fechas</h3>
         <div style={{
           display: 'flex',
@@ -151,6 +168,8 @@ function App() {
         loading={loading}
         error={error}
       />
+        </div>
+      </div>
     </div>
   );
 }

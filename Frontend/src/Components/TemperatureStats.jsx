@@ -28,9 +28,9 @@ export const TemperatureStats = ({ temperatureStats }) => {
       </h2>
       
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '20px'
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '15px'
       }}>
         <StatCard 
           value={`${temperatureStats.coefficientOfVariation}%`}
@@ -103,7 +103,7 @@ const StatDescription = () => (
   <div style={{
     marginTop: '15px',
     padding: '10px',
-    background: '#DBCC79',
+    background: '#FFEE8C',
     borderRadius: '5px',
     color: '#000000ff',
     lineHeight: '1.4'
