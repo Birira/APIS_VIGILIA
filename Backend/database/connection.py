@@ -20,6 +20,7 @@ def crea_tabla_datos():
             CREATE TABLE IF NOT EXISTS datos (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 temperatura REAL,
+                humedad REAL,
                 fecha_registro TIMESTAMP
             )
         """)

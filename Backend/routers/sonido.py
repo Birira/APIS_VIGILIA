@@ -45,3 +45,26 @@ async def recibir_datos(sonido: int = Form(...)):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("")
+def read_sound():
+    """Obtiene todos los registros de la base de datos"""
+    try:
+        with get_db_connection() as conn:
+            c = conn.cursor()
+            c.execute("SELECT id, sonido, fecha_registro FROM sonido")
+            results = c.fetchall()
+        
+        # Convert to list of dictionaries for JSON response
+        data = [
+            {
+                "id": row[0],
+                "sonido": row[1],
+                "fecha_registro": row[2]
+            }
+            for row in results
+        ]
+        return {"data": data}
+    except Exception as e:
+        print(f"Error in read_root: {str(e)}")
+        return {"data": [], "error": str(e)}

@@ -1,7 +1,3 @@
-#uvicorn main:app --reload
-#docker build -t simpl .
-#docker run -it -p 8000:8000 proyecto
-
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -47,7 +43,7 @@ def read_root():
     try:
         with get_db_connection() as conn:
             c = conn.cursor()
-            c.execute("SELECT id, temperatura, fecha_registro FROM datos")
+            c.execute("SELECT id, temperatura, humedad, fecha_registro FROM datos")
             results = c.fetchall()
         
         # Convert to list of dictionaries for JSON response
@@ -55,7 +51,8 @@ def read_root():
             {
                 "id": row[0],
                 "temperatura": row[1],
-                "fecha_registro": row[2]
+                "humedad": row[2],
+                "fecha_registro": row[3]
             }
             for row in results
         ]
