@@ -10,7 +10,15 @@ export const Grafico = ({ data }) => {
   // Format dates for better display
   const formattedData = data.map(item => ({
     ...item,
-    formattedDate: item.fecha_registro ? new Date(item.fecha_registro).toLocaleDateString() : 'Sin fecha'
+    formattedDate: item.fecha_registro 
+      ? new Date(item.fecha_registro).toLocaleString('es-ES', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+      : 'Sin fecha'
   }));
 
   return (
@@ -26,6 +34,10 @@ export const Grafico = ({ data }) => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis 
               dataKey="formattedDate"
+              tick={{ fontSize: 10 }}
+              angle={-45}
+              textAnchor="end"
+              height={80}
             />
             <YAxis 
               yAxisId="left"

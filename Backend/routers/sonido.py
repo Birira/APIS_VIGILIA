@@ -52,7 +52,7 @@ def read_sound():
     try:
         with get_db_connection() as conn:
             c = conn.cursor()
-            c.execute("SELECT id, sonido, fecha_registro FROM sonido")
+            c.execute("SELECT * FROM sonido")
             results = c.fetchall()
         
         # Convert to list of dictionaries for JSON response

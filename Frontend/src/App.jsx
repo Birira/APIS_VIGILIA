@@ -57,7 +57,7 @@ function App() {
 
   return (
     <div className="container" style={{ 
-      maxWidth: '1400px',
+      maxWidth: '1800px',
       margin: '0 auto',
       padding: '20px',
       background: '#F4F7F0'
