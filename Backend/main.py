@@ -3,16 +3,31 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database.connection import get_db_connection, crea_tabla_datos, crea_tabla_sonido, crea_tabla_configuracion
 from routers import temperatura, sonido
+from dotenv import load_dotenv
+import os
+
+# Cargar variables de entorno desde .env
+load_dotenv()
+
+# Mostrar modo de base de datos
+DATABASE_MODE = os.getenv("DATABASE_MODE", "local")
+print(f"🗄️  Modo de base de datos: {DATABASE_MODE.upper()}")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup: Inicializar base de datos
-    crea_tabla_datos()
-    crea_tabla_sonido()
-    crea_tabla_configuracion()
+    print("🚀 Iniciando aplicación...")
+    try:
+        crea_tabla_datos()
+        crea_tabla_sonido()
+        crea_tabla_configuracion()
+        print("✅ Base de datos inicializada correctamente")
+    except Exception as e:
+        print(f"❌ Error al inicializar base de datos: {e}")
     yield
     # Shutdown: Limpieza si es necesaria (opcional)
+    print("👋 Cerrando aplicación...")
 
 app = FastAPI(
     title="Sensores API",

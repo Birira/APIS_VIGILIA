@@ -291,7 +291,9 @@ export const ConfiguracionHorarios = () => {
               fontSize: '16px',
               fontWeight: 'bold',
               transition: 'background 0.2s',
-              minWidth: '150px'
+              minWidth: '150px',
+              alignSelf: 'flex-start',
+              margin: '22px'
             }}
             onMouseEnter={(e) => e.target.style.background = '#218838'}
             onMouseLeave={(e) => e.target.style.background = '#28a745'}
