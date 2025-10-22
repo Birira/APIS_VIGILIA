@@ -90,7 +90,7 @@ async def recibir_datos(sonido: int = Form(...)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("")
-def read_sound():
+async def read_sound():
     """Obtiene todos los registros de la base de datos"""
     try:
         with get_db_connection() as conn:
@@ -101,13 +101,12 @@ def read_sound():
         # Convert to list of dictionaries for JSON response
         data = [
             {
-                "id": row[0],
-                "sonido": row[1],
-                "fecha_registro": row[2]
+                "sonido": row[0],
+                "fecha_registro": row[1]
             }
             for row in results
         ]
-        return {"data": data}
+        return JSONResponse(content={"data": data})
     except Exception as e:
-        print(f"Error in read_root: {str(e)}")
-        return {"data": [], "error": str(e)}
+        print(f"Error in read_sound: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
