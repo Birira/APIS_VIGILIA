@@ -91,6 +91,7 @@ def crea_tabla_sonido():
         c = conn.cursor()
         c.execute("""
             CREATE TABLE IF NOT EXISTS sonido (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 sonido INTEGER,
                 fecha_registro TIMESTAMP
             )
