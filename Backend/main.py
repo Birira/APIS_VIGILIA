@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database.connection import get_db_connection, crea_tabla_datos, crea_tabla_sonido
+from database.connection import get_db_connection, crea_tabla_datos, crea_tabla_sonido, crea_tabla_configuracion
 from routers import temperatura, sonido
 
 
@@ -10,6 +10,7 @@ async def lifespan(app: FastAPI):
     # Startup: Inicializar base de datos
     crea_tabla_datos()
     crea_tabla_sonido()
+    crea_tabla_configuracion()
     yield
     # Shutdown: Limpieza si es necesaria (opcional)
 
