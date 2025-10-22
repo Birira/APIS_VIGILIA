@@ -95,14 +95,15 @@ async def read_sound():
     try:
         with get_db_connection() as conn:
             c = conn.cursor()
-            c.execute("SELECT sonido, fecha_registro FROM sonido")
+            c.execute("SELECT id, sonido, fecha_registro FROM sonido")
             results = c.fetchall()
         
         # Convert to list of dictionaries for JSON response
         data = [
             {
-                "sonido": row[0],
-                "fecha_registro": row[1]
+                "id": row[0],
+                "sonido": row[1],
+                "fecha_registro": row[2]
             }
             for row in results
         ]
