@@ -59,7 +59,8 @@ export const Grafico = ({ data }) => {
               type="monotone" 
               dataKey="temperatura" 
               stroke="#FF5733" 
-              activeDot={{ r: 8 }} 
+              dot={false}
+              activeDot={false}
               name="Temperatura" 
               strokeWidth={2}
             />
@@ -68,7 +69,8 @@ export const Grafico = ({ data }) => {
               type="monotone" 
               dataKey="humedad" 
               stroke="#3B82F6" 
-              activeDot={{ r: 8 }} 
+              dot={false}
+              activeDot={false}
               name="Humedad" 
               strokeWidth={2}
             />

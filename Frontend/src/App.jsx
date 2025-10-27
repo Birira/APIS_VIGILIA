@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useColmenaData } from "./Hooks/useColmenaData";
 import { Grafico } from "./Components/Grafico";
+import { GraficoSonido } from "./Components/GraficoSonido";
 import { StatusPanel } from "./Components/StatusPanel";
 import { TemperatureStats } from "./Components/TemperatureStats";
 import { ConfiguracionHorarios } from "./Components/ConfiguracionHorarios";
@@ -64,7 +65,7 @@ function App() {
       maxWidth: '1800px',
       margin: '0 auto',
       padding: '20px',
-      background: '#F4F7F0'
+      
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h1 style={{ 
@@ -200,6 +201,8 @@ function App() {
               </div>
               
               <Grafico data={filteredData} />
+              
+              <GraficoSonido startDate={startDate} endDate={endDate} />
               
               <StatusPanel 
                 connectionStatus={connectionStatus}

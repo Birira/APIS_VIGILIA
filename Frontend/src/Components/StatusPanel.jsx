@@ -7,8 +7,8 @@ export const StatusPanel = ({ connectionStatus, loading, error }) => {
     <div 
       className="status-panel" 
       style={{
-        color: '#000',
-        background: isConnected ? '#27b0e6ff' : '#ff9494ff',
+        color: '#ffffffff',
+        background: isConnected ? '#000000ff' : '#ff9494ff',
         padding: '10px',
         borderRadius: '5px',
         marginBottom: '20px',
