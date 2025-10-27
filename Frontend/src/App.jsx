@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useColmenaData } from "./Hooks/useColmenaData";
-import { Grafico } from "./Components/Grafico";
+import { Grafico } from "./Components/GraficoTemperatura";
 import { GraficoSonido } from "./Components/GraficoSonido";
 import { StatusPanel } from "./Components/StatusPanel";
 import { TemperatureStats } from "./Components/TemperatureStats";
